@@ -1,4 +1,3 @@
-import java.util.NoSuchElementException
 
 data class Node<E>(
     var item: E,
@@ -10,13 +9,13 @@ data class Node<E>(
     }
 }
 
-class LinkedList<E> {
+open class LinkedList<E> {
 
     private var size = 0
     var first: Node<E>? = null
     var last: Node<E>? = null
 
-    fun add(e: E) {
+    fun addLast(e: E) {
         if (size > 0) {
             val node = Node(e, last, null)
             last?.next = node
@@ -29,23 +28,37 @@ class LinkedList<E> {
         size++
     }
 
-    fun removeAt(idx: Int): E? {
-        if (idx >= size) return null
-
-        var target = first
-        for (i in 0 until idx) {
-            target = target?.next
+    fun addFirst(e: E) {
+        if (size > 0) {
+            val node = Node(e, null, first)
+            first?.next = node
+            first = node
+        } else {
+            val node = Node(e, null, null)
+            first = node
+            last = node
         }
-        return target?.let { remove(it) }
+        size++
     }
 
-    fun removeByData(element: E): E? {
-        var target = first
-        while (target != null) {
-            if (target.item == element) {
-                return remove(target)
-            }
-            target = target?.next
+    fun removeFirst(): E? {
+        if (first != null) {
+            val target = first
+            first = first?.next
+            target?.next = null
+            first?.prev = null
+            return target?.item
+        }
+        return null
+    }
+
+    fun removeLast(): E? {
+        if (last != null) {
+            val target = last
+            last = last?.prev
+            target?.prev = null
+            last?.next = null
+            return target?.item
         }
         return null
     }
@@ -135,6 +148,8 @@ class LinkedList<E> {
         first = null
         last = null
     }
+
+    fun isEmpty(): Boolean = size == 0
 }
 
 /*
