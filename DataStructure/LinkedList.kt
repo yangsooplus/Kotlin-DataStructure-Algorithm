@@ -1,4 +1,3 @@
-
 data class Node<E>(
     var item: E,
     var prev: Node<E>?,
@@ -47,6 +46,8 @@ open class LinkedList<E> {
             first = first?.next
             target?.next = null
             first?.prev = null
+            size--
+            if (size == 0) last = null
             return target?.item
         }
         return null
@@ -58,6 +59,8 @@ open class LinkedList<E> {
             last = last?.prev
             target?.prev = null
             last?.next = null
+            size--
+            if (size == 0) first = null
             return target?.item
         }
         return null
