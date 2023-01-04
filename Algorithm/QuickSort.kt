@@ -4,33 +4,21 @@ class QuickSort {
             val criteria = partition(array, start, end)
             quickSort(array, start, criteria - 1)
             quickSort(array, criteria + 1, end)
-
         }
     }
 
     private fun partition(array: Array<Int>, start: Int, end: Int): Int {
+        var i = start - 1
         val pivot = array[end]
-        var low = start
-        var high = end - 1
 
-
-        while (true) {
-            while (array[low] <= pivot && low < end - 1) {
-                low++
-            }
-
-            while (array[high] > pivot && high > start) {
-                high--
-            }
-
-            if (low < high) {
-                swap(array, low, high)
-            } else {
-                break
+        for (j in start until end) {
+            if (array[j] <= pivot) {
+                swap(array, ++i, j)
             }
         }
-        swap(array, high, end)
-        return high
+
+        swap(array, i + 1, end)
+        return i + 1
     }
 
     private fun swap(array: Array<Int>, a: Int, b: Int) {
